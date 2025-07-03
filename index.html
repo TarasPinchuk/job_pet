@@ -12,6 +12,9 @@
     dialog::backdrop{background:rgb(0 0 0/.45);backdrop-filter:blur(2px)}
     @keyframes slide-down{from{transform:translateY(-100%)}to{transform:translateY(0)}}
     .slide-down{animation:slide-down .35s cubic-bezier(.4,0,.2,1)}
+    @keyframes slide-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+    .reveal{opacity:0}
+    .reveal.visible{animation:slide-up .6s cubic-bezier(.4,0,.2,1) both}
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -62,17 +65,17 @@
   <div class="mx-auto max-w-6xl px-4">
     <h2 class="text-2xl sm:text-3xl font-semibold mb-10 text-center">Почему выбирают нас</h2>
     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      <article class="rounded-2xl bg-white p-6 shadow animate-fade-in">
+      <article class="rounded-2xl bg-white p-6 shadow reveal">
         <i data-feather="users" class="w-10 h-10 text-blue-600 mb-3"></i>
         <h3 class="font-medium text-lg mb-1">6000+ сотрудников</h3>
         <p class="text-sm leading-relaxed">Большая команда профессионалов и дружная атмосфера.</p>
       </article>
-      <article class="rounded-2xl bg-white p-6 shadow animate-fade-in [animation-delay:.1s]">
+      <article class="rounded-2xl bg-white p-6 shadow reveal">
         <i data-feather="award" class="w-10 h-10 text-blue-600 mb-3"></i>
         <h3 class="font-medium text-lg mb-1">27 лет на рынке</h3>
         <p class="text-sm">Надёжный работодатель с устойчивой репутацией.</p>
       </article>
-      <article class="rounded-2xl bg-white p-6 shadow animate-fade-in [animation-delay:.2s]">
+      <article class="rounded-2xl bg-white p-6 shadow reveal">
         <i data-feather="shopping-bag" class="w-10 h-10 text-blue-600 mb-3"></i>
         <h3 class="font-medium text-lg mb-1">100+ магазинов</h3>
         <p class="text-sm">Выбирайте место работы ближе к дому.</p>
@@ -135,15 +138,14 @@
   </div>
 </section>
 
-<footer class="py-8 text-center text-sm text-slate-500">
-  © 2025 ТМ «Геркулес». Используя сайт, вы соглашаетесь с <a href="#" class="underline">политикой конфиденциальности</a>.
-</footer>
+<footer class="py-8 text-center text-sm text-slate-500">© 2025 ТМ «Геркулес». Используя сайт, вы соглашаетесь с <a href="#" class="underline">политикой конфиденциальности</a>.</footer>
 
 <script>
-  const navToggle=document.getElementById('navToggle'),mobileNav=document.getElementById('mobileNav'),navClose=document.getElementById('navClose')||mobileNav.querySelector('button');function closeNav(){mobileNav.classList.add('hidden');navToggle.innerHTML=feather.icons.menu.toSvg()}navToggle.addEventListener('click',()=>{mobileNav.classList.toggle('hidden');navToggle.innerHTML=feather.icons[mobileNav.classList.contains('hidden')?'menu':'x'].toSvg()});navClose.addEventListener('click',closeNav);mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
-  const vacancies=[{title:'Водитель категории E',desc:'Поможем получить категорию.',phone:'+7-949-334-23-69'},{title:'Менеджер по персоналу',desc:'Подбор персонала, база резюме.',phone:'+7-949-306-21-37'},{title:'Юрисконсульт',desc:'Договоры, представление в суде.',phone:'+7-949-476-63-68'},{title:'Бухгалтер (учёт З/П)',desc:'Возможна стажировка без опыта.',phone:'335'}],grid=document.getElementById('vacancyGrid');vacancies.forEach((v,i)=>grid.insertAdjacentHTML('beforeend',`<article class="rounded-2xl bg-white p-6 shadow animate-fade-in" style="animation-delay:${i*70}ms"><h3 class="font-medium text-lg mb-2">${v.title}</h3><p class="text-sm leading-relaxed mb-4">${v.desc}</p><button data-open="formDialog" class="flex items-center gap-2 text-blue-600 font-medium hover:underline">Откликнуться <i data-feather="send"></i></button><p class="mt-2 text-xs text-slate-500">Тел.: <a href="tel:${v.phone.replace(/\\s+/g,'')}" class="underline">${v.phone}</a></p></article>`));
+  const navToggle=document.getElementById('navToggle'),mobileNav=document.getElementById('mobileNav'),navClose=document.getElementById('navClose');function closeNav(){mobileNav.classList.add('hidden');navToggle.innerHTML=feather.icons.menu.toSvg()}navToggle.addEventListener('click',()=>{mobileNav.classList.toggle('hidden');navToggle.innerHTML=feather.icons[mobileNav.classList.contains('hidden')?'menu':'x'].toSvg()});navClose.addEventListener('click',closeNav);mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
+  const vacancies=[{title:'Водитель категории E',desc:'Поможем получить категорию.',phone:'+7-949-334-23-69'},{title:'Менеджер по персоналу',desc:'Подбор персонала, база резюме.',phone:'+7-949-306-21-37'},{title:'Юрисконсульт',desc:'Договоры, представление в суде.',phone:'+7-949-476-63-68'},{title:'Бухгалтер (учёт З/П)',desc:'Возможна стажировка без опыта.',phone:'335'}],grid=document.getElementById('vacancyGrid');vacancies.forEach((v,i)=>grid.insertAdjacentHTML('beforeend',`<article class="rounded-2xl bg-white p-6 shadow reveal" style="animation-delay:${i*70}ms"><h3 class="font-medium text-lg mb-2">${v.title}</h3><p class="text-sm leading-relaxed mb-4">${v.desc}</p><button data-open="formDialog" class="flex items-center gap-2 text-blue-600 font-medium hover:underline">Откликнуться <i data-feather="send"></i></button><p class="mt-2 text-xs text-slate-500">Тел.: <a href="tel:${v.phone.replace(/\\s+/g,'')}" class="underline">${v.phone}</a></p></article>`));
   document.querySelectorAll('[data-open]').forEach(btn=>btn.addEventListener('click',()=>document.getElementById(btn.dataset.open).showModal()));document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>btn.closest('dialog').close()));
   feather.replace();
+  const observer=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:.2});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
